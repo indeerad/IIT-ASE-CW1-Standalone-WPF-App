@@ -1,0 +1,130 @@
+﻿<Page x:Class="Personal_Finance_Manager_V1.Views.WeeklyTransactionPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Personal_Finance_Manager_V1.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="WeeklyTransactionPage">
+
+    <Border BorderThickness="0.5" Background="#F6F6F6" BorderBrush="#B4B4B4" CornerRadius="3"  Height="400">
+        <Grid Background="#F6F6F6" Margin="5 5 5 0"  Height="415" >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="30"/>           
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="140"/>
+                <ColumnDefinition Width="140"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="0">
+                <TextBlock Margin="10 0 0 0" FontSize="24" >Weekly Trasactions</TextBlock>
+            </Grid>
+
+            <ComboBox SelectionChanged="SetActiveMonth" Grid.Row="0" Grid.Column="1" x:Name="CmbYear" Height="26" VerticalContentAlignment="Center" Margin="8 0 8 3" VerticalAlignment="Bottom" />
+            <ComboBox SelectionChanged="SetActiveMonth" Grid.Row="0" Grid.Column="2" x:Name="CmbMonth" Height="26" VerticalContentAlignment="Center" Margin="8 0 8 3" VerticalAlignment="Bottom"/>
+
+
+            <ListView Grid.Row="1" Grid.ColumnSpan="3" x:Name="TList" BorderThickness="0" HorizontalContentAlignment="Center">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Background" Value="red" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <ContentPresenter />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#B4B4B4" CornerRadius="2" BorderThickness="0.7" Width="650" Margin="0 7 0 0" Padding="6 1 0 3">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="180"/>
+                                    <ColumnDefinition Width="10*"/>
+                                    <ColumnDefinition Width="110"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Row="0"  Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal">                               
+                                    <Border Background="#C0C0C0" Height="24" Padding="3 2 3 2" CornerRadius="4">
+                                        <TextBlock Foreground="black" Margin="2,2"  Text="{Binding StartDate, StringFormat=m}" />
+                                    </Border>
+                                    <TextBlock  Margin="2 3 2 1">-</TextBlock>
+                                    <Border Background="#C0C0C0" Height="24" Padding="3 2 3 2" CornerRadius="4">
+                                        <TextBlock Foreground="black" Margin="2,2"  Text="{Binding EndDate, StringFormat=m}" />
+                                    </Border>
+                                </StackPanel>
+
+                                <TextBlock Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Text="{Binding TotalIncome, StringFormat=N0}"
+                                           Foreground="#004E98"
+                                           FontSize="13"
+                                           FontWeight="Bold"
+                                           ></TextBlock>
+
+                                <TextBlock Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Text="{Binding TotalExpense,  StringFormat=N0}"
+                                           Foreground="#FF6700"
+                                           FontSize="13"
+                                           FontWeight="Bold"
+                                           ></TextBlock>
+
+
+                                <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"
+                                          ItemsSource="{Binding TransactionList}" VerticalContentAlignment="Center"
+                                          BorderThickness="0">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="80"/>
+                                                    <ColumnDefinition Width="60"/>
+                                                    <ColumnDefinition Width="60"/>
+                                                    <ColumnDefinition Width="150"/>
+                                                    <ColumnDefinition Width="100"/>
+                                                    <ColumnDefinition Width="150"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock VerticalAlignment="Center" Grid.Column="0" Text="{Binding Date, StringFormat=m}"/>
+                                                <TextBlock VerticalAlignment="Center" Grid.Column="1" Text="{Binding TransactionType.Name}"/>
+                                                <TextBlock VerticalAlignment="Center"  Grid.Column="2" Text="{Binding TransactionCategory.Name, StringFormat=m}"/>
+                                                <TextBlock VerticalAlignment="Center"  Grid.Column="3" Text="{Binding Description, StringFormat=m}"/>
+                                                <TextBlock VerticalAlignment="Center"  Grid.Column="4" TextAlignment="Right" Text="{Binding Amount, StringFormat=N0}"/>
+                                                <StackPanel HorizontalAlignment="Right" Grid.Column="5" Orientation="Horizontal">
+                                                    <Button Width="50" Height="22" Margin="8" Tag="{Binding Id}" Click="BtnUpdate">Update</Button>
+                                                    <Button Width="50" Height="22" Tag="{Binding Id}" Click="BtnDelete">Delete</Button>
+                                                </StackPanel>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+
+                                
+                                
+                                
+
+
+
+                            </Grid>
+                        </Border>
+
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Border>
+
+</Page>

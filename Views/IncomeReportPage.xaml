@@ -1,0 +1,148 @@
+﻿<Page x:Class="Personal_Finance_Manager_V1.IncomeReportPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Personal_Finance_Manager_V1"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="IncomeReportPage">
+
+    <Border BorderThickness="0.5" Background="#F6F6F6" BorderBrush="#B4B4B4" CornerRadius="3"  Height="400">
+        <Grid Background="#F6F6F6" Margin="5 5 5 0"  Height="415" >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="140"/>
+                <ColumnDefinition Width="140"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="0">
+                <TextBlock Margin="10 0 0 0" FontSize="24" >Income and Expense Report</TextBlock>
+            </Grid>
+
+            <ComboBox SelectionChanged="SetActiveMonth" Grid.Row="0" Grid.Column="1" x:Name="CmbYear" Height="26" VerticalContentAlignment="Center" Margin="8 0 8 3" VerticalAlignment="Bottom" />
+            <ComboBox SelectionChanged="SetActiveMonth" Grid.Row="0" Grid.Column="2" x:Name="CmbMonth" Height="26" VerticalContentAlignment="Center" Margin="8 0 8 3" VerticalAlignment="Bottom"/>
+
+            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="52*"/>
+                    <RowDefinition Height="29"/>
+                    <RowDefinition Height="50*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="50*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Row="0" Grid.Column="0">
+                    <TextBlock Text="Category Wise Monthly Income" FontWeight="Bold" FontSize="15" Margin="10 0 0 5"/>
+                    <ListView x:Name="IncomeReportView"  Margin="10 0 10 0" Height="105">
+                        <ListView.Resources>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                            <DataTemplate x:Key="AmountTemplate">
+                                <TextBlock HorizontalAlignment="Right" Text="{Binding Amount, StringFormat=N2}"/>
+                            </DataTemplate>
+                            <DataTemplate x:Key="PercentageTemplate">
+                                <TextBlock HorizontalAlignment="Right" Text="{Binding Percentage, StringFormat=P}"/>
+                            </DataTemplate>
+                        </ListView.Resources>
+                        <ListView.View>
+                            <GridView>
+                                <GridView.Columns>
+                                    <GridViewColumn Width="100" Header="Income Category" DisplayMemberBinding="{Binding TransactionCategory.Name}" />
+                                    <GridViewColumn Width="100" Header="Amount" CellTemplate="{StaticResource AmountTemplate}" />
+                                    <GridViewColumn Width="100" Header="Percentage" CellTemplate="{StaticResource PercentageTemplate}" />
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <TextBlock HorizontalAlignment="Right" Margin="0 5 13 0"
+                               x:Name="LblTotalIncome"
+                               Foreground="#004E98"
+                               FontWeight="Bold" FontSize="15"></TextBlock>
+                </StackPanel>
+
+                <StackPanel Grid.Row="0" Grid.Column="1">
+                    <TextBlock Text="Category Wise Monthly Expense" FontWeight="Bold" FontSize="15" Margin="10 0 0 5"/>
+                    <ListView x:Name="ExpenseReportView"  Margin="10 0 10 0" Height="105">
+                        <ListView.Resources>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                            <DataTemplate x:Key="AmountTemplate">
+                                <TextBlock HorizontalAlignment="Right" Text="{Binding Amount, StringFormat=N2}"/>
+                            </DataTemplate>
+                            <DataTemplate x:Key="PercentageTemplate">
+                                <TextBlock HorizontalAlignment="Right" Text="{Binding Percentage, StringFormat=P}"/>
+                            </DataTemplate>
+                        </ListView.Resources>
+
+                        <ListView.View>
+                            <GridView>
+                                <GridView.Columns>
+                                    <GridViewColumn Width="100" Header="Income Category" DisplayMemberBinding="{Binding TransactionCategory.Name}" />
+                                    <GridViewColumn Width="100" Header="Amount"  CellTemplate="{StaticResource AmountTemplate}"/>
+                                    <GridViewColumn Width="100" Header="Percentage" CellTemplate="{StaticResource PercentageTemplate}" />
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <TextBlock HorizontalAlignment="Right" Margin="0 5 13 0"
+                               x:Name="LblTotalExpense"
+                               Foreground="#FF6700"
+                               FontWeight="Bold" FontSize="15"></TextBlock>
+                </StackPanel>
+
+                <TextBlock Grid.Row="1" Grid.Column="1" 
+                           x:Name="LblBalance"
+                           HorizontalAlignment="Right"
+                           FontWeight="Bold" FontSize="20"
+                           Text="Balance : "
+                           Margin="0 0 10 0"/>
+
+                <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3.5*"/>
+                        <ColumnDefinition Width="1.6*"/>
+                        <ColumnDefinition Width="10*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="0 0 0 0" FontWeight="Bold" FontSize="15" Text="Finantial Prediction"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="0 0 7 0" FontSize="14" TextAlignment="Right" Text="Expected Income :"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" x:Name="lblExpectedIncome" Margin="7 0 0 0" FontSize="14" TextAlignment="Right" />
+                    
+                    
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="0 0 7 0" FontSize="14" TextAlignment="Right" Text="Expected Expense :"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" x:Name="lblExpectedExpense" Margin="7 0 0 0" FontSize="14" TextAlignment="Right" />
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="0 0 7 0" FontSize="14" TextAlignment="Right" Text="Expected Balance :"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" x:Name="lblExpectedBalance" FontWeight="Bold" Margin="7 0 0 0" FontSize="14" TextAlignment="Right" />
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" FontSize="10" Text="*Prediction is calculated by income and expense pattern of last 3 months" VerticalAlignment="Bottom"/>
+                </Grid>
+                
+            </Grid>
+
+
+            
+        </Grid>
+    </Border>
+</Page>
